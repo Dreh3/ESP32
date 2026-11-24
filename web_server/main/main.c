@@ -57,7 +57,7 @@ void app_main(void)
     // aht20_del_sensor(aht20_handler);
     // i2c_bus_delete(&i2c_bus);
     esp_rom_delay_us(80);
-    ESP_LOGI(TAG, "rodndo a main");
+    ESP_LOGI(TAG, "rodando a main");
     esp_log_level_set("wifi", ESP_LOG_NONE);
 
     while(true){
@@ -67,12 +67,22 @@ void app_main(void)
             ESP_LOGI(TAG, "wi-fi iniciado");
         }
 
-        if (wifi_connect("ssid", "password")==ESP_OK){
+        if (wifi_connect("AndroidAP", "andressa123")==ESP_OK){
             ESP_LOGI(TAG, "wi-fi conectado");
         }
-        
 
         esp_rom_delay_us(800);
+
+        wifi_ap_record_t ap_info;
+        esp_err_t retorno = esp_wifi_sta_get_ap_info(&ap_info); //verifica saidas e dados da rede
+        //colocar os ifs
+        
+        if(retorno == ESP_OK){
+            ESP_LOGI(TAG, "Conectado!");
+            ESP_LOGI(TAG, "SSID: %s", ap_info.ssid);
+        }else{
+            ESP_LOGE(TAG, "Estação desconectada ou inacessível");
+        }
 
         if(wifi_disconnect()==ESP_OK){
             ESP_LOGI(TAG, "wi-fi desconectado");

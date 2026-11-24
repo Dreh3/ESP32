@@ -41,8 +41,9 @@ esp_err_t wifi_init(void){
         ESP_LOGI(TAGW, "init wi-fi ok");
     };
 
+    esp_err_t err_retorno =esp_wifi_set_mode(WIFI_MODE_STA);
     //defino como station para essa aplicação 
-    if(esp_wifi_set_mode(WIFI_MODE_STA)!=ESP_OK){
+    if(err_retorno!=ESP_OK){
         ESP_LOGE(TAGW, "Falha ao configurar modo");
     }else{
         ESP_LOGI(TAGW, "set mode ok");
@@ -96,15 +97,31 @@ esp_err_t wifi_connect(char *wifi_ssid, char *wifi_password){
         ESP_LOGI(TAGW, "connect wi-fi ok");
     };
 
-    return ESP_OK;
+    return err_retorno;
 };
 
 
 esp_err_t wifi_disconnect(void){
-    if(esp_wifi_disconnect()!=ESP_OK){
-        ESP_LOGE(TAGW, "Falha ao desconectar wifi");
-    }else{
-        ESP_LOGI(TAGW, "desconnect wi-fi ok");
+    // if(esp_wifi_disconnect()!=ESP_OK){
+    //     ESP_LOGE(TAGW, "Falha ao desconectar wifi");
+    // }else{
+    //     ESP_LOGI(TAGW, "desconnect wi-fi ok");
+    // };
+
+    return esp_wifi_disconnect();
+
+};
+
+esp_err_t wifi_deinit(){
+    if(esp_wifi_stop()!=ESP_OK){
+        ESP_LOGE(TAGW,"wifi-fi nem foi inicializado");
+        return ESP_OK;
+    };
+
+    esp_wifi_deinit();
+    if(esp_wifi_clear_default_wifi_driver_and_handlers(netif_instance)!=ESP_OK){
+        ESP_LOGE(TAGW, "Falha ao limpar drivers");
+        return ESP_FAIL;
     };
 
     return ESP_OK;

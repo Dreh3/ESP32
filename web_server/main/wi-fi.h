@@ -13,6 +13,7 @@
 
 static const esp_err_t ERR_PASSWORD_EXCEED = 9999;
 
+
 esp_err_t wifi_init(void);
 esp_err_t wifi_connect(char *wifi_ssid, char *wifi_password);
 esp_err_t wifi_disconnect(void);
