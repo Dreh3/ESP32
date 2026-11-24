@@ -30,7 +30,7 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=c:\\Users\\andre\\aht20_\\build"
+    "--compile-commands-dir=c:\\Users\\andre\\ES32\\aht20_\\build"
   ],
   "idf.flashType": "UART",
   "idf.port": "COM4"
