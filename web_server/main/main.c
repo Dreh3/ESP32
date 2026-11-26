@@ -4,7 +4,7 @@
 // #include "wi-fi.h"
 
 #include "wi-fi.h"
-
+#include "http_client.h"
 // #define I2C_SCL_AHT20 18
 // #define I2C_SDA_AHT20 19
 // #define I2C_MNUM_AHT20 I2C_NUM_1
@@ -56,39 +56,70 @@ void app_main(void)
 
     // aht20_del_sensor(aht20_handler);
     // i2c_bus_delete(&i2c_bus);
-    esp_rom_delay_us(80);
+    // esp_rom_delay_us(80);
     ESP_LOGI(TAG, "rodando a main");
-    esp_log_level_set("wifi", ESP_LOG_NONE);
+    // esp_log_level_set("wifi", ESP_LOG_NONE);
+
+    // esp_rom_delay_us(80);
+
+    if(wifi_init()==ESP_OK){
+        ESP_LOGI(TAG, "wi-fi iniciado");
+    }
+
+    if (wifi_connect("CLARO_JANISSON-2G", "Cordeiro33")==ESP_OK){
+        ESP_LOGI(TAG, "solicitação de conexão realizada");
+    }
+
+    // // Aguarda associação ao AP temporário
+    // if (wifi_wait_connection() != ESP_OK) {
+    //     ESP_LOGE(TAG, "Falha na conexão Wi-Fi");
+    //     return;
+    // }
+
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
     while(true){
-        esp_rom_delay_us(80);
-
-        if(wifi_init()==ESP_OK){
-            ESP_LOGI(TAG, "wi-fi iniciado");
-        }
-
-        if (wifi_connect("AndroidAP", "andressa123")==ESP_OK){
-            ESP_LOGI(TAG, "wi-fi conectado");
-        }
-
-        esp_rom_delay_us(800);
-
-        wifi_ap_record_t ap_info;
-        esp_err_t retorno = esp_wifi_sta_get_ap_info(&ap_info); //verifica saidas e dados da rede
-        //colocar os ifs
         
-        if(retorno == ESP_OK){
-            ESP_LOGI(TAG, "Conectado!");
-            ESP_LOGI(TAG, "SSID: %s", ap_info.ssid);
-        }else{
-            ESP_LOGE(TAG, "Estação desconectada ou inacessível");
-        }
+        // esp_rom_delay_us(800);
 
-        if(wifi_disconnect()==ESP_OK){
-            ESP_LOGI(TAG, "wi-fi desconectado");
-        }
+        // wifi_ap_record_t ap_info;
+        // esp_err_t retorno = esp_wifi_sta_get_ap_info(&ap_info); //verifica saidas e dados da rede
+        // // //colocar os ifs
+        // // ESP_LOGI(TAG, "SSID: %s", ap_info.ssid);
+
+        // if(retorno == ESP_OK){
+        //     ESP_LOGI(TAG, "Conectado!");
+        //     ESP_LOGI(TAG, "SSID: %s", ap_info.ssid);
+
+            //tentando http_post
+
+            // EventBits_t bits = xEventGroupWaitBits(
+            //     c_wifi_event_group,
+            //     WIFI_CONNECTED_BIT,   //testar o bit de conexão antes de fazer request
+            //     pdFALSE,
+            //     pdFALSE,
+            //     portMAX_DELAY
+            // );
+
+            // if (bits & WIFI_CONNECTED_BIT) {
+            //     http_get();
+            // }
+            cliente = esp_http_client_init(&config);
+            http_get_with_url("http://httpbin.org/get");
+            esp_rom_delay_us(800);
+            esp_http_client_cleanup(cliente);
+
+            vTaskDelay(pdMS_TO_TICKS(10000));
+        // }else{
+        //     ESP_LOGE(TAG, "Estação desconectada ou inacessível");
+        // };
         
+        // esp_rom_delay_us(100000);
     
+    };
+
+    if(wifi_disconnect()==ESP_OK){
+        ESP_LOGI(TAG, "wi-fi desconectado");
     };
     
 };

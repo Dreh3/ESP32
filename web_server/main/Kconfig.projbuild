@@ -1,0 +1,44 @@
+menu "Configuracoes da aplicacao"
+
+    menu "Wi-Fi"
+
+        config WIFI_SSID1
+            string "SSID 1"
+            default "ssd1"
+
+        config WIFI_PASSWORD1
+            string "PASSWORD 1"
+            default "senha1"
+        
+        config WIFI_SSID2
+            string "SSID 2"
+            default "ssd2"
+
+        config WIFI_PASSWORD2
+            string "PASSWORD 2"
+            default "senha2"
+
+        config WIFI_SSID3
+            string "SSID 3"
+            default ""
+
+        config WIFI_PASSWORD3
+            string "PASSWORD 3"
+            default ""
+
+    endmenu
+
+    menu "HTTP"
+
+        config HTTP_SERVER_URL
+            string "URL do servidor HTTP"
+            default "url"
+
+        config HTTP_TIMEOUT
+            int "Timeout da requisicao (ms)"
+            range 1000 30000
+            default 10000
+
+    endmenu
+
+endmenu

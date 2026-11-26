@@ -1,0 +1,6 @@
+# This file was generated using idf.py save-defconfig or menuconfig [D] key. It can be edited manually.
+# Espressif IoT Development Framework (ESP-IDF) 6.1.0 Project Minimal Configuration
+#
+CONFIG_BOOTLOADER_LOG_LEVEL_NONE=y
+CONFIG_ESP_WIFI_DEBUG_PRINT=y
+CONFIG_WIFI_RMT_DEBUG_PRINT=y
